@@ -7,7 +7,6 @@ import se.mickelus.mutil.network.BlockPosPacket;
 import se.mickelus.tetra.blocks.workbench.WorkbenchTile;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
 
 @ParametersAreNonnullByDefault
 public class WorkbenchActionPacket extends BlockPosPacket {
@@ -25,22 +24,13 @@ public class WorkbenchActionPacket extends BlockPosPacket {
     @Override
     public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
-        try {
-            writeString(actionKey, buffer);
-        } catch (IOException exception) {
-            System.err.println("An error occurred when writing action name to packet buffer");
-        }
+        writeString(actionKey, buffer);
     }
 
     @Override
     public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
-
-        try {
-            actionKey = readString(buffer);
-        } catch (IOException exception) {
-            System.err.println("An error occurred when reading action name from packet buffer");
-        }
+        actionKey = readString(buffer);
     }
 
     @Override

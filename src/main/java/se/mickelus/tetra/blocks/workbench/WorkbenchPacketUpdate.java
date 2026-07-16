@@ -8,7 +8,6 @@ import se.mickelus.tetra.module.SchematicRegistry;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
 import java.util.Objects;
 
 @ParametersAreNonnullByDefault
@@ -33,17 +32,13 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
         buffer.writeInt(pos.getY());
         buffer.writeInt(pos.getZ());
 
-        try {
-            if (schematic != null) {
-                writeString(schematic.getKey(), buffer);
-            } else {
-                writeString("", buffer);
-            }
-
-            writeString(Objects.requireNonNullElse(selectedSlot, ""), buffer);
-        } catch (IOException exception) {
-            System.err.println("An error occurred when writing schematic name to packet buffer");
+        if (schematic != null) {
+            writeString(schematic.getKey(), buffer);
+        } else {
+            writeString("", buffer);
         }
+
+        writeString(Objects.requireNonNullElse(selectedSlot, ""), buffer);
     }
 
     @Override
@@ -53,17 +48,13 @@ public class WorkbenchPacketUpdate extends AbstractPacket {
         int z = buffer.readInt();
         pos = new BlockPos(x, y, z);
 
-        try {
-            String schematicKey = readString(buffer);
-            schematic = SchematicRegistry.getSchematic(schematicKey);
+        String schematicKey = readString(buffer);
+        schematic = SchematicRegistry.getSchematic(schematicKey);
 
-            selectedSlot = readString(buffer);
+        selectedSlot = readString(buffer);
 
-            if ("".equals(selectedSlot)) {
-                selectedSlot = null;
-            }
-        } catch (IOException exception) {
-            System.err.println("An error occurred when reading schematic name from packet buffer");
+        if ("".equals(selectedSlot)) {
+            selectedSlot = null;
         }
     }
 

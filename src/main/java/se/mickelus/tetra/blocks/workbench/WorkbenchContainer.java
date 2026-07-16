@@ -13,6 +13,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import se.mickelus.mutil.gui.ToggleableSlot;
 import se.mickelus.tetra.module.schematic.UpgradeSchematic;
 
@@ -51,7 +52,7 @@ public class WorkbenchContainer extends AbstractContainerMenu {
             }
         }
 
-        IItemHandler playerInventoryHandler = new net.neoforged.neoforge.items.wrapper.InvWrapper(playerInventory);
+        IItemHandler playerInventoryHandler = new InvWrapper(playerInventory);
 
         // player inventory
         for (int x = 0; x < 9; x++) {

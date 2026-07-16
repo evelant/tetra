@@ -7,7 +7,6 @@ import se.mickelus.mutil.network.BlockPosPacket;
 import se.mickelus.mutil.util.CastOptional;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,19 +31,11 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
     public void toBytes(FriendlyByteBuf buffer) {
         super.toBytes(buffer);
 
-        try {
-            writeString(slot, buffer);
-        } catch (IOException e) {
-            System.err.println("An error occurred when writing tweak packet to buffer");
-        }
+        writeString(slot, buffer);
         buffer.writeInt(tweaks.size());
         tweaks.forEach((tweakKey, step) -> {
-            try {
-                writeString(tweakKey, buffer);
-                buffer.writeInt(step);
-            } catch (IOException e) {
-                System.err.println("An error occurred when writing tweak packet to buffer");
-            }
+            writeString(tweakKey, buffer);
+            buffer.writeInt(step);
         });
     }
 
@@ -52,14 +43,10 @@ public class WorkbenchPacketTweak extends BlockPosPacket {
     public void fromBytes(FriendlyByteBuf buffer) {
         super.fromBytes(buffer);
 
-        try {
-            slot = readString(buffer);
-            int size = buffer.readInt();
-            for (int i = 0; i < size; i++) {
-                tweaks.put(readString(buffer), buffer.readInt());
-            }
-        } catch (IOException e) {
-            System.err.println("An error occurred when reading tweak packet from buffer");
+        slot = readString(buffer);
+        int size = buffer.readInt();
+        for (int i = 0; i < size; i++) {
+            tweaks.put(readString(buffer), buffer.readInt());
         }
     }
 
