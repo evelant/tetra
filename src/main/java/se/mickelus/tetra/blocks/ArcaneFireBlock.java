@@ -27,7 +27,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.Vec3;
-import java.util.function.Supplier;
 import org.joml.Vector3f;
 import se.mickelus.tetra.ServerScheduler;
 import se.mickelus.tetra.TetraMod;
@@ -37,6 +36,7 @@ import se.mickelus.tetra.client.particle.SpawnParticlesPacket;
 import se.mickelus.tetra.effect.potion.UnstablePowerMobEffect;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 public class ArcaneFireBlock extends BaseFireBlock {
